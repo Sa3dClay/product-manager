@@ -23,9 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // products apis
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('/', 'index');
-        Route::get('/{product}', 'show');
         Route::post('/create', 'store');
-        Route::patch('edit/{product}', 'update');
-        Route::delete('delete/{product}', 'destroy');
+        Route::get('/{product}', 'show');
+        Route::patch('/{product}', 'update');
+        Route::delete('/{product}', 'destroy');
     });
 });

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Requests\CreateProductRequest;
 
 class ProductController extends Controller
 {
@@ -18,9 +20,9 @@ class ProductController extends Controller
         return response(['products' => ProductResource::collection($user->products)]);
     }
 
-    public function show()
+    public function show(Product $product)
     {
-        // code
+        return response(['product' => new ProductResource($product)]);
     }
 
     public function store(CreateProductRequest $request)
@@ -63,8 +65,21 @@ class ProductController extends Controller
         // code
     }
 
-    public function destroy()
+    public function destroy(Product $product)
     {
-        // code
+        try {
+            foreach ($product->images as $image) {
+                Storage::disk('public')->delete($image->image_path);
+            }
+
+            $product->delete();
+
+            return response(['message' => 'Product deleted successfully']);
+        } catch (\Exception $e) {
+            return response([
+                'message' => 'Something went wrong while deleting product!',
+                'error' => $e,
+            ], 422);
+        }
     }
 }
