@@ -17,6 +17,8 @@ class AuthController extends Controller
             return response(['errors' => ['password' => ['password is incorrect!']]], 422);
         }
 
+        $user->tokens()->delete();
+
         $token = $user->createToken('auth');
 
         return response([
