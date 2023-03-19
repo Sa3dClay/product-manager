@@ -20,12 +20,16 @@ Route::controller(AuthController::class)->prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    // products apis
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('/', 'index');
         Route::post('/create', 'store');
         Route::get('/{product}', 'show');
         Route::patch('/{product}', 'update');
         Route::delete('/{product}', 'destroy');
+
+        Route::prefix('images')->group(function () {
+            Route::post('/add', 'addImages');
+            Route::delete('/{image}', 'deleteImage');
+        });
     });
 });
