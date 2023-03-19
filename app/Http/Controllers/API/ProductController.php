@@ -37,7 +37,7 @@ class ProductController extends Controller
                 'price' => $request->price,
             ]);
 
-            $images = $request->file('images');
+            $images = $request->file('images') ?? [];
 
             foreach ($images as $image) {
                 $imagePath = $image->store('products', ['disk' => 'public']);
