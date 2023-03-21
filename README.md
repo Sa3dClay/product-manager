@@ -7,3 +7,7 @@
 ### run `php artisan migrate --seed`
 ### run `php artisan storage:link`
 ### run `php artisan serve`
+
+## .env edits
+### `DB_DATABASE`
+### `APP_URL=http://127.0.0.1:8000` (to read local images url)
