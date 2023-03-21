@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\AddImagesToProductRequest;
 
 class ProductController extends Controller
@@ -80,7 +81,7 @@ class ProductController extends Controller
 
             DB::commit();
 
-            return response(['product' => new ProductResource($product)], 200);
+            return response(['product' => new ProductResource($product)]);
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -91,9 +92,11 @@ class ProductController extends Controller
         }
     }
 
-    public function update()
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        // code
+        $product->update($request->all());
+
+        return response(['product' => new ProductResource($product)]);
     }
 
     public function destroy(Product $product)
