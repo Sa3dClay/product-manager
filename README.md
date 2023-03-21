@@ -5,4 +5,5 @@
 ### run `cp .env.example .env`
 ### run `php artisan key:generate`
 ### run `php artisan migrate --seed`
+### run `php artisan storage:link`
 ### run `php artisan serve`
